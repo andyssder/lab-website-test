@@ -1,42 +1,44 @@
 ---
-layout:  default
+layout: default
 permalink: /group/
 title: Group
 nav: true
 nav_order: 3
-
 ---
 
+{%- comment -%} 获取初始集合 {%- endcomment -%}
+{% assign all_members = site.group %}
+
 ## Principal Investigator
-{% assign pis = site.group | where_exp: "item", "item.path contains 'pi/' and item.role == 'pi' and item.status == 'active'" %}
+{%- comment -%} 多级过滤：先滤路径，再滤角色，最后滤状态 {%- endcomment -%}
+{% assign pis = all_members | where_exp: "item", "item.path contains 'pi/'" %}
+{% assign pis = pis | where: "role", "pi" | where: "status", "active" %}
 {% for member in pis %}
   {% include group/member_card.html member=member %}
 {% endfor %}
 
- 
 ## PhD Students
-{% assign phds = site.group | where_exp: "item", "item.path contains 'phd/' and item.role == 'phd' and item.status == 'active'" %}
+{% assign phds = all_members | where_exp: "item", "item.path contains 'phd/'" %}
+{% assign phds = phds | where: "role", "phd" | where: "status", "active" %}
 {% for member in phds %}
   {% include group/member_card.html member=member %}
 {% endfor %}
 
 ## Master Students
-{% assign masters = site.group | where_exp: "item", "item.path contains 'master/' and item.role == 'master' and item.status == 'active'" %}
+{% assign masters = all_members | where_exp: "item", "item.path contains 'master/'" %}
+{% assign masters = masters | where: "role", "master" | where: "status", "active" %}
 {% for member in masters %}
   {% include group/member_card.html member=member %}
 {% endfor %}
 
 ## Undergraduate Students
-{% assign undergrads = site.group | where_exp: "item", "item.path contains 'undergraduate/' and item.role == 'undergraduate' and item.status == 'active'" %}
+{% assign undergrads = all_members | where_exp: "item", "item.path contains 'undergraduate/'" %}
+{% assign undergrads = undergrads | where: "role", "undergraduate" | where: "status", "active" %}
 {% for member in undergrads %}
   {% include group/member_card.html member=member %}
 {% endfor %}
 
-
-
-
 ## Alumni
-
 <div class="table-responsive">
     <table class="table table-hover">
       <thead>
@@ -47,7 +49,8 @@ nav_order: 3
         </tr>
       </thead>
       <tbody>
-        {% assign alumni = site.group | where_exp: "item", "item.path contains 'alumni/' and item.role == 'alumni' and item.status == 'active'" %}
+        {% assign alumni = all_members | where_exp: "item", "item.path contains 'alumni/'" %}
+        {% assign alumni = alumni | where: "role", "alumni" | where: "status", "active" %}
         {% for member in alumni %}
         <tr>
           <td>{{ member.name }}</td>
