@@ -1,0 +1,26 @@
+<div class="card mb-4 shadow-none border-0">
+    <div class="row g-0 align-items-center">
+        <div class="col-md-3 col-sm-4">
+            {% if include.member.image %}
+            <img src="{{ site.baseurl }}/assets/img/group/{{ include.member.image }}" 
+                 class="img-fluid rounded-start p-3" 
+                 alt="{{ include.member.name }}">
+            {% endif %}
+        </div>
+        
+        <div class="col-md-9 col-sm-8">
+            <div class="card-body">
+                
+                <div class="card-text">
+                    {{ include.member.content | markdownify }}
+                </div>
+                
+                {% if include.member.email %}
+                <p class="card-text mt-2"><small class="text-muted">
+                    <i class="fas fa-envelope"></i> <a href="mailto:{{ include.member.email }}">{{ include.member.email }}</a>
+                </small></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
